@@ -69,7 +69,8 @@ const SalaryComponent = (props) => {
             setInrSalary(inrEmps);
             setUsdSalary(usdEmps);
 
-            const grossTotalInr = parseFloat(parseFloat(allTotals.total_inr_monthly_payable) + parseFloat(allTotals.total_usd_monthly_payable * props.conversionRate)).toFixed(2);
+            const grossTotalInr = parseFloat(parseFloat(total_inr_monthly_payable) + parseFloat(total_usd_monthly_payable * props.conversionRate)).toFixed(2);
+
             const grossTotalUsd = parseFloat(grossTotalInr / props.conversionRate).toFixed(2);
 
             const totalInvoiceInr = parseFloat(parseFloat(grossTotalInr) + (props.consulting_rate * props.conversionRate)).toFixed(2);
@@ -93,214 +94,218 @@ const SalaryComponent = (props) => {
 
     return (
         <div>
-            <table>
-                <thead style={{ backgroundColor: highlightColor }}>
-                    <tr>
-                        <th style={{ padding: '10px 15px' }}><b>SI. No.</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Name</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Designation</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Date of Joining</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Date of Relieving</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>No. of Days(In a Month)</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Working Days(In a Month)</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Currency</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Current Annual CTC</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Monthly CTC</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Bonus</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Arrears</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Other Payout</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Total Salary</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Reimbursement</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Pay-out Amount (INR)</b></th>
-                        <th style={{ padding: '10px 15px', backgroundColor: secondHighlightColor }}><b>Remarks</b></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        final_inr_salary.map((emp, index) => (
-                            <tr>
-                                <td className="salCol1">{emp.s_no}</td>
-                                <td>{emp.name}</td>
-                                <td className="salCol3">{emp.designation}</td>
-                                <td className="salCol4">{emp.doj}</td>
-                                <td>{emp.dor}</td>
-                                <td className="salCol67">{props.totalDays}</td>
-                                <td className="salCol67">{emp.working_days}</td>
-                                <td className="salCol67">{emp.currency}</td>
-                                <td className="salCol9">{emp.ann_ctc}</td>
-                                <td className="salCol9">{emp.monthly_ctc}</td>
-                                <td>{emp.bonus}</td>
-                                <td>{emp.arrears}</td>
-                                <td>{emp.other_payout}</td>
-                                <td className="salCol9">{emp.total_payable}</td>
-                                <td>{emp.reimbursements}</td>
-                                <td className="salCol9">{emp.total_payable}</td>
-                                <td className="salCol17"><input style={{ border: 0 }} type="text" value={emp.remarks} onChange={(e) => {
-                                    setInrSalary((prevState) => {
-                                        const newArr = [...prevState];
-                                        newArr[index].remarks = e.target.value;
-                                        return newArr;
-                                    })
-                                }} /></td>
-                            </tr>
-                        ))
-                    }
-                    {
-                        final_inr_salary && final_inr_salary.length ?
-                            (
-                                <>
-                                    <tr style={{ backgroundColor: highlightColor }}>
-                                        <td colSpan="7" className="salTotalSalaryHeading"><b>Total Salary (A)&nbsp;</b></td>
-                                        <td className="salCol67"><b>INR</b></td>
-                                        <td className="salCol9"><b>{allTotals.total_inr_ctc}</b></td>
-                                        <td className="salCol9"><b>{allTotals.total_inr_monthly_ctc}</b></td>
-                                        <td className="salCol9"><b>0.00</b></td>
-                                        <td className="salCol9"><b>0.00</b></td>
-                                        <td className="salCol9"><b>0.00</b></td>
-                                        <td className="salCol9"><b>{allTotals.total_inr_monthly_ctc}</b></td>
-                                        <td className="salCol9"><b>0.00</b></td>
-                                        <td className="salCol9"><b>{allTotals.total_inr_monthly_payable}</b></td>
-                                    </tr>
+            {
+                final_inr_salary && final_inr_salary.length &&
+                <table>
+                    <thead style={{ backgroundColor: highlightColor }}>
+                        <tr>
+                            <th style={{ padding: '10px 15px' }}><b>SI. No.</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Name</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Designation</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Date of Joining</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Date of Relieving</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>No. of Days(In a Month)</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Working Days(In a Month)</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Currency</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Current Annual CTC</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Monthly CTC</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Bonus</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Arrears</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Other Payout</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Total Salary</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Reimbursement</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Pay-out Amount (INR)</b></th>
+                            <th style={{ padding: '10px 15px', backgroundColor: secondHighlightColor }}><b>Remarks</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            final_inr_salary.map((emp, index) => (
+                                <tr>
+                                    <td className="salCol1">{emp.s_no}</td>
+                                    <td>{emp.name}</td>
+                                    <td className="salCol3">{emp.designation}</td>
+                                    <td className="salCol4">{emp.doj}</td>
+                                    <td>{emp.dor}</td>
+                                    <td className="salCol67">{props.totalDays}</td>
+                                    <td className="salCol67">{emp.working_days}</td>
+                                    <td className="salCol67">{emp.currency}</td>
+                                    <td className="salCol9">{emp.ann_ctc}</td>
+                                    <td className="salCol9">{emp.monthly_ctc}</td>
+                                    <td>{emp.bonus}</td>
+                                    <td>{emp.arrears}</td>
+                                    <td>{emp.other_payout}</td>
+                                    <td className="salCol9">{emp.total_payable}</td>
+                                    <td>{emp.reimbursements}</td>
+                                    <td className="salCol9">{emp.total_payable}</td>
+                                    <td className="salCol17"><input style={{ border: 0 }} type="text" value={emp.remarks} onChange={(e) => {
+                                        setInrSalary((prevState) => {
+                                            const newArr = [...prevState];
+                                            newArr[index].remarks = e.target.value;
+                                            return newArr;
+                                        })
+                                    }} /></td>
+                                </tr>
+                            ))
+                        }
+                        {
+                            final_inr_salary && final_inr_salary.length ?
+                                (
+                                    <>
+                                        <tr style={{ backgroundColor: highlightColor }}>
+                                            <td colSpan="7" className="salTotalSalaryHeading"><b>Total Salary (A)&nbsp;</b></td>
+                                            <td className="salCol67"><b>INR</b></td>
+                                            <td className="salCol9"><b>{allTotals.total_inr_ctc}</b></td>
+                                            <td className="salCol9"><b>{allTotals.total_inr_monthly_ctc}</b></td>
+                                            <td className="salCol9"><b>0.00</b></td>
+                                            <td className="salCol9"><b>0.00</b></td>
+                                            <td className="salCol9"><b>0.00</b></td>
+                                            <td className="salCol9"><b>{allTotals.total_inr_monthly_ctc}</b></td>
+                                            <td className="salCol9"><b>0.00</b></td>
+                                            <td className="salCol9"><b>{allTotals.total_inr_monthly_payable}</b></td>
+                                        </tr>
 
-                                    <tr>
-                                        <td colSpan="13" className="salTotalSalaryHeading"><b>USD Value&nbsp;</b></td>
-                                        <td className="salCol9"><b>{parseFloat(allTotals.total_inr_monthly_ctc / props.conversionRate).toFixed(2)}</b></td>
-                                        <td className="salCol9"><b>0.00</b></td>
-                                        <td className="salCol9"><b>{parseFloat(allTotals.total_inr_monthly_payable / props.conversionRate).toFixed(2)}</b></td>
-                                    </tr>
-                                </>
-                            ) : ''
-                    }
-                </tbody>
-            </table>
+                                        <tr>
+                                            <td colSpan="13" className="salTotalSalaryHeading"><b>USD Value&nbsp;</b></td>
+                                            <td className="salCol9"><b>{parseFloat(allTotals.total_inr_monthly_ctc / props.conversionRate).toFixed(2)}</b></td>
+                                            <td className="salCol9"><b>0.00</b></td>
+                                            <td className="salCol9"><b>{parseFloat(allTotals.total_inr_monthly_payable / props.conversionRate).toFixed(2)}</b></td>
+                                        </tr>
+                                    </>
+                                ) : ''
+                        }
+                    </tbody>
+                </table>
+            }
+            {
+                final_usd_salary && final_usd_salary.length &&
+                <table>
+                    <thead style={{ backgroundColor: highlightColor }}>
+                        <tr>
+                            <th style={{ padding: '10px 15px' }}><b>SI. No.</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Name</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Designation</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Date of Joining</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Date of Relieving</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>No. of Days(In a Month)</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Working Days(In a Month)</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Currency</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Current Annual CTC</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Monthly CTC</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Bonus</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Arrears</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Other Payout</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Total Salary</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Reimbursement</b></th>
+                            <th style={{ padding: '10px 15px' }}><b>Pay-out Amount (USD)</b></th>
+                            <th style={{ padding: '10px 15px', backgroundColor: secondHighlightColor }}><b>Remarks</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            final_usd_salary.map((emp, index) => (
+                                <tr>
+                                    <td className="salCol1">{emp.s_no}</td>
+                                    <td>{emp.name}</td>
+                                    <td className="salCol3">{emp.designation}</td>
+                                    <td className="salCol4">{emp.doj}</td>
+                                    <td>{emp.dor}</td>
+                                    <td className="salCol67">{props.totalDays}</td>
+                                    <td className="salCol67">{emp.working_days}</td>
+                                    <td className="salCol67">{emp.currency}</td>
+                                    <td className="salCol9">{emp.ann_ctc}</td>
+                                    <td className="salCol9">{emp.monthly_ctc}</td>
+                                    <td>{emp.bonus}</td>
+                                    <td>{emp.arrears}</td>
+                                    <td>{emp.other_payout}</td>
+                                    <td className="salCol9">{emp.total_payable}</td>
+                                    <td>{emp.reimbursements}</td>
+                                    <td className="salCol9">{emp.total_payable}</td>
+                                    <td className="salCol17"><input style={{ border: 0 }} type="text" value={emp.remarks} onChange={(e) => {
+                                        setUsdSalary((prevState) => {
+                                            const newArr = [...prevState];
+                                            newArr[index].remarks = e.target.value;
+                                            return newArr;
+                                        })
+                                    }} /></td>
+                                </tr>
+                            ))
+                        }
+                        {
+                            final_usd_salary && final_usd_salary.length ?
+                                (
+                                    <>
+                                        <tr style={{ backgroundColor: highlightColor }}>
+                                            <td colSpan="7" className="salTotalSalaryHeading"><b>Total Salary (B)&nbsp;</b></td>
+                                            <td className="salCol67"><b>USD</b></td>
+                                            <td className="salCol9"><b>{allTotals.total_usd_ctc}</b></td>
+                                            <td className="salCol9"><b>{allTotals.total_usd_monthly_ctc}</b></td>
+                                            <td className="salCol9"><b>0.00</b></td>
+                                            <td className="salCol9"><b>0.00</b></td>
+                                            <td className="salCol9"><b>0.00</b></td>
+                                            <td className="salCol9"><b>{allTotals.total_usd_monthly_ctc}</b></td>
+                                            <td className="salCol9"><b>0.00</b></td>
+                                            <td className="salCol9"><b>{allTotals.total_usd_monthly_payable}</b></td>
+                                            <td style={{ textAlign: 'left', backgroundColor: secondHighlightColor }}><b>USD Value</b></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td className="salLastRows" colSpan="7">Other Reimbursements/Expenses Paid by Supertal (C )</td>
+                                            <td className="salLastRows" colSpan="8">INR</td>
+                                            <td className="salLastRows" ></td>
+                                            <td className="salLastRows" ><b>$0.00</b></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td className="salLastRows" colSpan="7">Laptop Charges (Refer Reimbursement Sheet for detail Break-up)(D)</td>
+                                            <td className="salLastRows" colSpan="8">INR</td>
+                                            <td className="salLastRows" >0.00</td>
+                                            <td className="salLastRows" ><b>$0.00</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td className="salLastRows" colSpan="7"><b>Gross Total (A+B+C+D)</b></td>
+                                            <td className="salLastRows" colSpan="8"><b>INR</b></td>
+                                            <td className="salLastRows" ><b>{allTotals.grossTotalInr}</b></td>
+                                            <td className="salLastRows" ><b>${allTotals.grossTotalUsd}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td className="salLastRows" colSpan="7">Consulting Charges</td>
+                                            <td className="salLastRows" colSpan="8">INR</td>
+                                            <td className="salLastRows" >{(parseFloat(props.consulting_rate * props.conversionRate)).toFixed(2)}</td>
+                                            <td className="salLastRows" ><b>${props.consulting_rate}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td className="salLastRows" colSpan="7"><b>Total Invoice Amount</b></td>
+                                            <td className="salLastRows" colSpan="8">INR</td>
+                                            <td className="salLastRows" >{allTotals.totalInvoiceInr}</td>
+                                            <td className="salLastRows" ><b>${allTotals.totalInvoiceUsd}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td className="salLastRows" colSpan="7"><b>Less : Advance Refund</b></td>
+                                            <td className="salLastRows" colSpan="8">INR</td>
+                                            <td className="salLastRows" >0</td>
+                                            <td className="salLastRows" ><b>$0.00</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td className="salLastRows" colSpan="7"><b>Net Invoice Amount</b></td>
+                                            <td className="salLastRows" colSpan="8">INR</td>
+                                            <td className="salLastRows" >{allTotals.totalInvoiceInr}</td>
+                                            <td className="salLastRows" ><b>${allTotals.totalInvoiceUsd}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td className="salLastRows" colSpan="7"><b>Total Invoice Amount</b></td>
+                                            <td className="salLastRows" colSpan="8">USD</td>
+                                            <td className="salLastRows" >{allTotals.totalInvoiceUsd}</td>
+                                            <td className="salLastRows" ><b></b></td>
+                                        </tr>
 
 
-            <table>
-                <thead style={{ backgroundColor: highlightColor }}>
-                    <tr>
-                        <th style={{ padding: '10px 15px' }}><b>SI. No.</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Name</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Designation</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Date of Joining</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Date of Relieving</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>No. of Days(In a Month)</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Working Days(In a Month)</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Currency</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Current Annual CTC</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Monthly CTC</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Bonus</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Arrears</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Other Payout</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Total Salary</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Reimbursement</b></th>
-                        <th style={{ padding: '10px 15px' }}><b>Pay-out Amount (USD)</b></th>
-                        <th style={{ padding: '10px 15px', backgroundColor: secondHighlightColor }}><b>Remarks</b></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        final_usd_salary.map((emp, index) => (
-                            <tr>
-                                <td className="salCol1">{emp.s_no}</td>
-                                <td>{emp.name}</td>
-                                <td className="salCol3">{emp.designation}</td>
-                                <td className="salCol4">{emp.doj}</td>
-                                <td>{emp.dor}</td>
-                                <td className="salCol67">{props.totalDays}</td>
-                                <td className="salCol67">{emp.working_days}</td>
-                                <td className="salCol67">{emp.currency}</td>
-                                <td className="salCol9">{emp.ann_ctc}</td>
-                                <td className="salCol9">{emp.monthly_ctc}</td>
-                                <td>{emp.bonus}</td>
-                                <td>{emp.arrears}</td>
-                                <td>{emp.other_payout}</td>
-                                <td className="salCol9">{emp.total_payable}</td>
-                                <td>{emp.reimbursements}</td>
-                                <td className="salCol9">{emp.total_payable}</td>
-                                <td className="salCol17"><input style={{ border: 0 }} type="text" value={emp.remarks} onChange={(e) => {
-                                    setUsdSalary((prevState) => {
-                                        const newArr = [...prevState];
-                                        newArr[index].remarks = e.target.value;
-                                        return newArr;
-                                    })
-                                }} /></td>
-                            </tr>
-                        ))
-                    }
-                    {
-                        final_usd_salary && final_usd_salary.length ?
-                            (
-                                <>
-                                    <tr style={{ backgroundColor: highlightColor }}>
-                                        <td colSpan="7" className="salTotalSalaryHeading"><b>Total Salary (B)&nbsp;</b></td>
-                                        <td className="salCol67"><b>USD</b></td>
-                                        <td className="salCol9"><b>{allTotals.total_usd_ctc}</b></td>
-                                        <td className="salCol9"><b>{allTotals.total_usd_monthly_ctc}</b></td>
-                                        <td className="salCol9"><b>0.00</b></td>
-                                        <td className="salCol9"><b>0.00</b></td>
-                                        <td className="salCol9"><b>0.00</b></td>
-                                        <td className="salCol9"><b>{allTotals.total_usd_monthly_ctc}</b></td>
-                                        <td className="salCol9"><b>0.00</b></td>
-                                        <td className="salCol9"><b>{allTotals.total_usd_monthly_payable}</b></td>
-                                        <td style={{ textAlign: 'left', backgroundColor: secondHighlightColor }}><b>USD Value</b></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td className="salLastRows" colSpan="7">Other Reimbursements/Expenses Paid by Supertal (C )</td>
-                                        <td className="salLastRows" colSpan="8">INR</td>
-                                        <td className="salLastRows" ></td>
-                                        <td className="salLastRows" ><b>$0.00</b></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td className="salLastRows" colSpan="7">Laptop Charges (Refer Reimbursement Sheet for detail Break-up)(D)</td>
-                                        <td className="salLastRows" colSpan="8">INR</td>
-                                        <td className="salLastRows" >0.00</td>
-                                        <td className="salLastRows" ><b>$0.00</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td className="salLastRows" colSpan="7"><b>Gross Total (A+B+C+D)</b></td>
-                                        <td className="salLastRows" colSpan="8"><b>INR</b></td>
-                                        <td className="salLastRows" ><b>{allTotals.grossTotalInr}</b></td>
-                                        <td className="salLastRows" ><b>${allTotals.grossTotalUsd}</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td className="salLastRows" colSpan="7">Consulting Charges</td>
-                                        <td className="salLastRows" colSpan="8">INR</td>
-                                        <td className="salLastRows" >{(parseFloat(props.consulting_rate * props.conversionRate)).toFixed(2)}</td>
-                                        <td className="salLastRows" ><b>${props.consulting_rate}</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td className="salLastRows" colSpan="7"><b>Total Invoice Amount</b></td>
-                                        <td className="salLastRows" colSpan="8">INR</td>
-                                        <td className="salLastRows" >{allTotals.totalInvoiceInr}</td>
-                                        <td className="salLastRows" ><b>${allTotals.totalInvoiceUsd}</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td className="salLastRows" colSpan="7"><b>Less : Advance Refund</b></td>
-                                        <td className="salLastRows" colSpan="8">INR</td>
-                                        <td className="salLastRows" >0</td>
-                                        <td className="salLastRows" ><b>$0.00</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td className="salLastRows" colSpan="7"><b>Net Invoice Amount</b></td>
-                                        <td className="salLastRows" colSpan="8">INR</td>
-                                        <td className="salLastRows" >{allTotals.totalInvoiceInr}</td>
-                                        <td className="salLastRows" ><b>${allTotals.totalInvoiceUsd}</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td className="salLastRows" colSpan="7"><b>Total Invoice Amount</b></td>
-                                        <td className="salLastRows" colSpan="8">USD</td>
-                                        <td className="salLastRows" >{allTotals.totalInvoiceUsd}</td>
-                                        <td className="salLastRows" ><b></b></td>
-                                    </tr>
-
-
-                                </>
-                            ) : ''
-                    }
-                </tbody>
-            </table>
+                                    </>
+                                ) : ''
+                        }
+                    </tbody>
+                </table>
+            }
         </div >
     );
 };

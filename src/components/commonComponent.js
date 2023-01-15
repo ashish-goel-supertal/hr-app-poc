@@ -47,7 +47,7 @@ const CommonComponent = (props) => {
                 <tbody>
                     <tr>
                         <td className="commonLeftCol"><b>No. of Employees</b></td >
-                        <td className="commonMidCol">Nos.</td>
+                        <td className="commonMidCol"></td>
                         <td className="commonRightCol"><input style={{ border: '0px', textAlign: 'right' }} value={totalEmployees} onChange={(e) => setTotalEmployees(e.target.value)} /></td>
                     </tr>
                     <tr>
@@ -64,7 +64,7 @@ const CommonComponent = (props) => {
                                 }
                             </select>
                         </td>
-                        <td className="commonRightCol">{months[selectedMonth].days}</td>
+                        <td className="commonRightCol">{months[selectedMonth].days} Days</td>
                     </tr>
                     <tr>
                         <td className="commonLeftCol"><b>Conversion Rate</b></td>

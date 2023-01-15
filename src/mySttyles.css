@@ -124,3 +124,19 @@ td {
 .salLastRows{
     text-align: right;
 }
+
+.invoiceHeader{
+    text-align: center;
+}
+
+.invoiceMainContentBody{
+    text-align: center;
+    vertical-align: text-top;
+    padding-top: 5px;
+    font-size: 13px;
+}
+
+.invoiceMainContentCalculations{
+    text-align: center;
+    font-size: 13px;
+}
